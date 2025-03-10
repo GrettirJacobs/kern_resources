@@ -1,0 +1,10 @@
+{
+  "id": "1a162dc4-7afb-4acb-91e7-3c66adb6c0cf",
+  "title": "Test Title",
+  "content": "Test content for API endpoint",
+  "timestamp": "2025-02-24T00:21:44.746576",
+  "sentiment": {
+    "polarity": 0.0,
+    "subjectivity": 0.0
+  }
+}

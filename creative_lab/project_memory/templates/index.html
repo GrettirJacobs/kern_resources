@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Memory System</title>
+    <!-- 
+    CSS Styles
+    Using a clean, modern design with a focus on readability and usability.
+    Colors are chosen for good contrast and visual hierarchy.
+    -->
+    <style>
+        /* Base styles for the entire document */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Container for centering content and limiting maximum width */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Styles for the entry form section */
+        .entry-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Grid layout for displaying entries */
+        .entries {
+            display: grid;
+            gap: 20px;
+        }
+
+        /* Individual entry card styling */
+        .entry {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Entry title styling */
+        .entry-title {
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        /* Abstract text styling */
+        .entry-abstract {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        /* Link to full entry styling */
+        .entry-link {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .entry-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Form input styling */
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        /* Textarea specific styling */
+        textarea {
+            height: 200px;
+            resize: vertical;
+        }
+
+        /* Button styling */
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Timestamp styling */
+        .timestamp {
+            color: #999;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project Memory System</h1>
+        
+        <!-- Entry Form Section -->
+        <div class="entry-form">
+            <h2>New Entry</h2>
+            <!-- Title input field (optional) -->
+            <input type="text" id="entry-title" placeholder="Entry Title (optional)">
+            <!-- Main content textarea -->
+            <textarea id="entry-content" placeholder="Write your entry here..."></textarea>
+            <!-- Submit button -->
+            <button onclick="saveEntry()">Save Entry</button>
+        </div>
+
+        <!-- Entries Display Section -->
+        <div class="entries">
+            <!-- Loop through all entries -->
+            {% for entry in entries %}
+            <div class="entry">
+                <!-- Display entry title -->
+                <div class="entry-title">{{ entry.title }}</div>
+                <!-- Display entry timestamp -->
+                <div class="timestamp">{{ entry.timestamp }}</div>
+                <!-- Display AI-generated abstract -->
+                <div class="entry-abstract">{{ entry.abstract }}</div>
+                <!-- Link to view full entry -->
+                <a href="{{ entry.original_file }}" class="entry-link">View Full Entry</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- JavaScript for handling entry submission -->
+    <script>
+        /**
+         * Save a new entry to the system
+         * Collects content and title from the form, sends to the server,
+         * and handles the response appropriately
+         */
+        async function saveEntry() {
+            // Get form values
+            const content = document.getElementById('entry-content').value;
+            const title = document.getElementById('entry-title').value;
+            
+            // Validate content
+            if (!content.trim()) {
+                alert('Please enter some content');
+                return;
+            }
+
+            try {
+                // Send POST request to server
+                const response = await fetch('/save_entry', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ content, title })
+                });
+
+                // Handle response
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Entry saved:', result);
+                    // Reload page to show new entry
+                    location.reload();
+                } else {
+                    alert('Failed to save entry');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error saving entry');
+            }
+        }
+    </script>
+</body>
+</html>

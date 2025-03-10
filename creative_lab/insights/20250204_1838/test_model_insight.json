@@ -1,0 +1,12 @@
+{
+    "key_points": [
+        "Retrieval test point"
+    ],
+    "reasoning": "Testing retrieval functionality",
+    "questions": [
+        "Can we retrieve linked files?"
+    ],
+    "next_steps": [
+        "Verify retrieval works"
+    ]
+}

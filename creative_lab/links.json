@@ -1,0 +1,26 @@
+{
+    "20250204_1833": [
+        {
+            "session_id": "20250204_1833",
+            "conversation": "C:\\Users\\ErikzConfuzer\\kern_resources\\creative_lab\\conversations\\20250204_1833\\test_model_conversation.txt",
+            "insight": "C:\\Users\\ErikzConfuzer\\kern_resources\\creative_lab\\insights\\20250204_1833\\test_model_insight.json",
+            "timestamp": "2025-02-04T18:33:48.376189"
+        }
+    ],
+    "20250204_1838": [
+        {
+            "session_id": "20250204_1838",
+            "conversation": "C:\\Users\\ErikzConfuzer\\kern_resources\\creative_lab\\conversations\\20250204_1838\\test_model_conversation.txt",
+            "insight": "C:\\Users\\ErikzConfuzer\\kern_resources\\creative_lab\\insights\\20250204_1838\\test_model_insight.json",
+            "timestamp": "2025-02-04T18:38:54.406884"
+        }
+    ],
+    "20250204_1840": [
+        {
+            "session_id": "20250204_1840",
+            "conversation": "C:\\Users\\ErikzConfuzer\\kern_resources\\creative_lab\\conversations\\20250204_1840\\test_model_conversation.txt",
+            "insight": "C:\\Users\\ErikzConfuzer\\kern_resources\\creative_lab\\insights\\20250204_1840\\test_model_insight.json",
+            "timestamp": "2025-02-04T18:40:53.803703"
+        }
+    ]
+}

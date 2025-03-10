@@ -1,0 +1,12 @@
+{
+    "key_points": [
+        "Test point"
+    ],
+    "reasoning": "Test reasoning",
+    "questions": [
+        "Test question"
+    ],
+    "next_steps": [
+        "Test next step"
+    ]
+}

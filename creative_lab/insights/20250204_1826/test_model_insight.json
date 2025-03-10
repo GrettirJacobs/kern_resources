@@ -1,0 +1,15 @@
+{
+    "key_points": [
+        "First major observation",
+        "Second important finding"
+    ],
+    "reasoning": "This is how we arrived at these conclusions...",
+    "questions": [
+        "What should we explore next?",
+        "How does this connect to previous findings?"
+    ],
+    "next_steps": [
+        "Investigate the first question",
+        "Document the process"
+    ]
+}
