@@ -1,0 +1,3 @@
+"""
+Creative Lab package initialization.
+"""
