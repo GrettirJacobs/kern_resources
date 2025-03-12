@@ -1,0 +1,1 @@
+web: gunicorn "kern_resources.app:app"
