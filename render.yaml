@@ -1,10 +1,11 @@
 services:
   - type: web
     name: kern-resources
-    env: python
+    runtime: python
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
+      pip install gunicorn
     startCommand: gunicorn "kern_resources.app:app" --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
