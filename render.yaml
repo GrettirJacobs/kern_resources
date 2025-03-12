@@ -2,17 +2,14 @@ services:
   - type: web
     name: kern-resources
     runtime: python
-    buildCommand: |
-      pip install --upgrade pip
-      pip install -r requirements.txt
-      pip install gunicorn
-    startCommand: gunicorn "kern_resources.app:app" --bind 0.0.0.0:$PORT
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn kern_resources.app:app --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.0
       - key: PORT
         value: 10000
     healthCheckPath: /health
-    plan: free  # Specify the plan type
-    region: oregon  # US West region, closest to California
-    autoDeploy: true  # Enable automatic deployments
+    plan: free
+    region: oregon
+    autoDeploy: true
