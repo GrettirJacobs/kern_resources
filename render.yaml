@@ -2,6 +2,7 @@ services:
   - type: web
     name: kern-resources
     runtime: python
+    env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn kern_resources.app:app --bind 0.0.0.0:$PORT
     envVars:
@@ -13,3 +14,10 @@ services:
     plan: free
     region: oregon
     autoDeploy: true
+    buildFilter:
+      paths:
+        - requirements.txt
+        - kern_resources/**
+      ignoredPaths:
+        - Dockerfile.old
+        - docker-compose.yml
