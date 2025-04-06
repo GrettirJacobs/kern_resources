@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: llama4-inference-api
+    env: python
+    region: oregon
+    plan: gpu-large # Ensures GPU availability
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: MODEL_ID
+        value: meta-llama/Llama-4-Scout-17B-E
+      - key: PORT
+        value: 5000
+    scaling:
+      minInstances: 1
+      maxInstances: 1 # Limit to one instance due to model size
+    healthCheckPath: /health
+    autoDeploy: false # Safer to manually control deployments
+    gpu: true # Enable GPU support
