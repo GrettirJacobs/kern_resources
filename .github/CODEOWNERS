@@ -1,0 +1,12 @@
+# These owners will be the default owners for everything in the repo
+* @GrettirJacobs
+
+# FTS5 search implementation
+/fts_search_api.py @GrettirJacobs
+/setup_fts_index.py @GrettirJacobs
+/ai_search_demo.py @GrettirJacobs
+/docs/fts_search/ @GrettirJacobs
+/tests/test_fts_search.py @GrettirJacobs
+
+# Llama 4 integration
+/creative_lab/llama4_exp/ @GrettirJacobs
