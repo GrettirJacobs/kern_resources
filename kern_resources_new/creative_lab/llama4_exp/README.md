@@ -20,12 +20,21 @@ llama4_exp/
 
 ### Prerequisites
 
+#### Option 1: Local Deployment
 - [Ollama](https://ollama.com/download) installed and running
 - Python 3.8+ with pip
 - CrewAI installed (`pip install crewai`)
 - Sufficient disk space for models (approximately 5GB for Scout Instruct)
+- GPU with at least 16GB VRAM for optimal performance
+
+#### Option 2: Remote Deployment (Recommended)
+- Render.com account with GPU instance
+- Python 3.8+ with pip
+- CrewAI installed (`pip install crewai`)
 
 ### Setup
+
+#### Option 1: Local Setup (High-end GPU Required)
 
 1. **Install Ollama**:
    - Download and install from [ollama.com/download](https://ollama.com/download)
@@ -37,6 +46,27 @@ llama4_exp/
    ```
 
 3. **Test the integration with CrewAI**:
+   ```bash
+   python integration/crewai_example.py
+   ```
+
+#### Option 2: Remote Setup on Render (Recommended)
+
+1. **Deploy Ollama on Render**:
+   - Follow the instructions in [docs/render_deployment.md](docs/render_deployment.md)
+   - This will set up Ollama on a GPU-enabled Render instance
+
+2. **Configure environment variables**:
+   - Copy `.env.example` to `.env`
+   - Update the `OLLAMA_API_BASE` to point to your Render instance
+   - Set `OLLAMA_REMOTE=true`
+
+3. **Run the setup script**:
+   ```bash
+   python scripts/setup_llama4_scout.py
+   ```
+
+4. **Test the integration with CrewAI**:
    ```bash
    python integration/crewai_example.py
    ```
@@ -97,6 +127,15 @@ This implementation follows a dual-track approach:
 - Develop model switching mechanism based on task requirements
 - Integrate with the main Kern Resources application
 
+## Hardware Considerations
+
+Running Llama 4 models requires significant GPU resources:
+
+- **Llama 4 Scout Instruct (8B)**: Minimum 16GB VRAM (RTX 3090/4090 or better)
+- **Llama 4 E (17B)**: Minimum 32GB VRAM (A100 or better)
+
+For most users, the recommended approach is to use a cloud GPU instance on Render.com or a similar platform. See [docs/render_deployment.md](docs/render_deployment.md) for detailed instructions.
+
 ## Resources
 
 - [Llama 4 Technical Report](https://ai.meta.com/research/publications/llama-4-technical-report/)
@@ -104,3 +143,4 @@ This implementation follows a dual-track approach:
 - [CrewAI Documentation](https://docs.crewai.com/)
 - [LoRA Paper](https://arxiv.org/abs/2106.09685)
 - [QLoRA Paper](https://arxiv.org/abs/2305.14314)
+- [Render.com Documentation](https://render.com/docs)
