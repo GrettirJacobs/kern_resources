@@ -1,0 +1,18 @@
+services:
+  # Static site configuration
+  - type: web
+    name: kern-resources-frontend
+    env: static
+    buildCommand: echo "No build step required for this static site"
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: "public, max-age=3600"
+    envVars:
+      - key: API_URL
+        value: https://api.kernresources.com  # Replace with your actual API URL when deployed
