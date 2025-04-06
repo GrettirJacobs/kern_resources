@@ -1,0 +1,18 @@
+# Requirements for Llama 4 integration
+
+# Core dependencies
+requests>=2.28.0
+python-dotenv>=0.20.0
+
+# CrewAI for agent orchestration
+crewai>=0.28.0
+
+# Optional dependencies for training (Track 2)
+# Uncomment when implementing training pipeline
+# torch>=2.0.0
+# transformers>=4.30.0
+# peft>=0.4.0
+# bitsandbytes>=0.40.0
+# accelerate>=0.20.0
+# datasets>=2.12.0
+# trl>=0.7.1
