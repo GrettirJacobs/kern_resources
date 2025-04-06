@@ -3,9 +3,15 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import os
 from dotenv import load_dotenv
+import codecs
 
 # Load environment variables
-load_dotenv()
+try:
+    with codecs.open('.env', 'r', encoding='utf-8', errors='ignore') as f:
+        env_content = f.read()
+    load_dotenv()
+except Exception as e:
+    print(f"Warning: Error loading .env file: {e}")
 
 app = Flask(__name__)
 
@@ -18,12 +24,16 @@ def load_model():
     global model, tokenizer
     if model is None:
         model_id = os.getenv("MODEL_ID", "meta-llama/Llama-4-Scout-17B-E")
-        tokenizer = AutoTokenizer.from_pretrained(model_id)
-        model = AutoModelForCausalLM.from_pretrained(
-            model_id,
-            torch_dtype=torch.float16,
-            device_map="auto"
-        )
+        try:
+            tokenizer = AutoTokenizer.from_pretrained(model_id)
+            model = AutoModelForCausalLM.from_pretrained(
+                model_id,
+                torch_dtype=torch.float16,
+                device_map="auto"
+            )
+        except Exception as e:
+            print(f"Error loading model: {e}")
+            raise
 
 @app.route("/health", methods=["GET"])
 def health_check():
