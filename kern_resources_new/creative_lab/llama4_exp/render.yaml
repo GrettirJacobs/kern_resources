@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: ollama-llama4
+    env: docker
+    plan: gpu-a4000 # 16GB VRAM GPU
+    dockerfilePath: ./Dockerfile
+    disk:
+      name: ollama-data
+      mountPath: /root/.ollama
+      sizeGB: 50
+    envVars:
+      - key: OLLAMA_HOST
+        value: 0.0.0.0
+    ports:
+      - port: 11434
+        protocol: TCP
+    healthCheckPath: /api/tags
+    autoDeploy: false # Disable auto-deploy to control costs
+    scaling:
+      minInstances: 0
+      maxInstances: 1
+      targetMemoryPercent: 80
+    # Suspend after 15 minutes of inactivity to save costs
+    suspended: false
+    suspendOnIdle: true
+    idleTimeoutMinutes: 15
