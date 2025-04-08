@@ -20,6 +20,11 @@ dream_lab/
 ├── training/        # Fine-tuning components
 ├── exploration/     # Dream-time task generation
 ├── orchestration/   # Multi-agent coordination
+├── providers/       # Custom LLM providers
+│   └── groq_provider.py # GroqCloud provider for Llama 4 models
+├── examples/        # Example scripts
+│   └── groq_dream_example.py # Example using GroqCloud
+├── docs/            # Documentation
 └── integration.py   # Integration with main application
 ```
 
@@ -143,8 +148,68 @@ app.config['DREAM_LAB_CONFIG'] = {
 }
 ```
 
+## GroqCloud Integration
+
+Dream Lab now includes integration with GroqCloud for cost-effective Llama 4 inference:
+
+### GroqCloud Provider
+
+The `providers/groq_provider.py` file contains a custom LLM provider that uses GroqCloud to run Llama 4 models. This provider offers a cost-effective way to use high-quality models with Dream Lab.
+
+```python
+from dream_lab.providers.groq_provider import GroqProvider
+
+# Create the GroqCloud provider
+provider = GroqProvider(
+    model="meta-llama/llama-4-scout-17b-16e-instruct",
+    temperature=0.7
+)
+
+# Use with Dream Lab
+dream_team.lead_model.llm = provider
+```
+
+### Example Usage
+
+The `examples/groq_dream_example.py` script demonstrates how to use the GroqCloud provider with Dream Lab:
+
+```bash
+python examples/groq_dream_example.py
+```
+
+## Future Development
+
+### Planned Enhancements
+
+1. **Security Measures**
+   - API key management
+   - Request validation
+   - Monitoring and logging
+   - Access control
+
+2. **Limitations and Monitoring**
+   - Token usage limits
+   - Cost controls
+   - Performance monitoring
+
+3. **Tools for CrewAI**
+   - Web search and crawling
+   - Database integration
+   - Email and notification tools
+
+4. **Team of AI Experts**
+   - Integration with Claude, GPT, Grok, Gemini, etc.
+   - Specialized roles for different models
+   - Routing and orchestration
+
+5. **Evaluation Framework**
+   - Benchmark tasks
+   - Performance metrics
+   - A/B testing
+
 ## Dependencies
 
 - CrewAI (optional): For multi-agent orchestration
 - Flask (optional): For API endpoints and CLI commands
 - Schedule (optional): For scheduling dream sessions
+- Requests: For API communication
