@@ -1,0 +1,75 @@
+# Dashboard Configuration
+
+# General settings
+general:
+  host: 0.0.0.0
+  port: 8050
+  debug: true
+  title: "Kern Resources Token Tracker"
+  theme: "bootstrap"
+  refresh_interval: 60  # seconds
+
+# Authentication
+auth:
+  enabled: true
+  users:
+    admin: admin  # username: password (change in production)
+
+# Database connection
+database:
+  url: sqlite:///token_tracker.db  # SQLite for development
+
+# UI settings
+ui:
+  # Color scheme
+  colors:
+    primary: "#007BFF"
+    secondary: "#6C757D"
+    success: "#28A745"
+    danger: "#DC3545"
+    warning: "#FFC107"
+    info: "#17A2B8"
+    light: "#F8F9FA"
+    dark: "#343A40"
+
+  # Default date range for charts
+  default_date_range: 7  # days
+
+  # Chart settings
+  charts:
+    token_usage:
+      title: "Token Usage"
+      x_axis: "Date"
+      y_axis: "Tokens"
+      height: 400
+
+    cost:
+      title: "Estimated Cost"
+      x_axis: "Date"
+      y_axis: "Cost (USD)"
+      height: 400
+
+    model_distribution:
+      title: "Model Distribution"
+      height: 400
+
+    rate_limits:
+      title: "Rate Limit Usage"
+      x_axis: "Time"
+      y_axis: "Requests"
+      height: 400
+
+# Notification settings
+notifications:
+  email:
+    enabled: true
+    smtp_server: smtp.gmail.com
+    smtp_port: 587
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    from_address: ${SMTP_FROM_ADDRESS}
+    to_address: erik.jacobs@gmail.com
+
+  slack:
+    enabled: false
+    webhook_url: https://hooks.slack.com/services/xxx/yyy/zzz

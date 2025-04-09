@@ -1,0 +1,25 @@
+# API Configuration
+
+# General settings
+general:
+  host: 0.0.0.0
+  port: 5000
+  debug: true
+
+# Database connection
+database:
+  url: sqlite:///token_tracker.db  # SQLite for development
+
+# Authentication (for future use)
+auth:
+  enabled: false
+  # jwt_secret: your_jwt_secret_here
+  # token_expiration: 86400  # 24 hours in seconds
+
+# Logging settings
+logging:
+  level: INFO
+  file: logs/api.log
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  max_size: 10485760  # 10 MB
+  backup_count: 5

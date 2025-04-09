@@ -1,0 +1,91 @@
+version: '3'
+
+services:
+  # Database service
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: token_tracker
+      POSTGRES_PASSWORD: token_tracker
+      POSTGRES_DB: token_tracker
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U token_tracker"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Proxy service
+  proxy:
+    build:
+      context: .
+      dockerfile: docker/proxy/Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://token_tracker:token_tracker@db:5432/token_tracker
+      - LITELLM_PROXY_HOST=0.0.0.0
+      - LITELLM_PROXY_PORT=8000
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - TOTAL_BUDGET=${TOTAL_BUDGET:-100.00}
+      - DAILY_BUDGET=${DAILY_BUDGET:-10.00}
+      - NOTIFICATION_EMAIL=${NOTIFICATION_EMAIL:-erik.jacobs@gmail.com}
+      - SMTP_SERVER=${SMTP_SERVER:-smtp.gmail.com}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+
+  # Dashboard service
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/dashboard/Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://token_tracker:token_tracker@db:5432/token_tracker
+      - DASHBOARD_HOST=0.0.0.0
+      - DASHBOARD_PORT=8050
+      - DASHBOARD_DEBUG=false
+      - DASHBOARD_USERNAME=${DASHBOARD_USERNAME:-admin}
+      - DASHBOARD_PASSWORD=${DASHBOARD_PASSWORD:-admin}
+    ports:
+      - "8050:8050"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+
+  # API service
+  api:
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://token_tracker:token_tracker@db:5432/token_tracker
+      - API_HOST=0.0.0.0
+      - API_PORT=5000
+      - API_DEBUG=false
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-default-secret-key-change-in-production}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+
+volumes:
+  postgres_data:
